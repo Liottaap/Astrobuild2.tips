@@ -1,0 +1,23 @@
+---
+import { getCollection } from "astro:content";
+import Header from "../../components/Header.astro";
+import Base from "../../layouts/Base.astro";
+
+
+export async function getStaticPaths() {
+	const posts = await getCollection("tips");
+	return posts.map((post) => ({
+		params: { slug: post.slug },
+		props: post,
+	}));
+}
+
+const post = Astro.props;
+const { Content } = await post.render();
+---
+
+<Base title="AstroBuild2.tips">
+	<Header title="AstroBuild.tips" />
+	<Content />
+</Base>
+
